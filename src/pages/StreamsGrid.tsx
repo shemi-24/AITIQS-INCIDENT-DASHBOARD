@@ -1,15 +1,8 @@
 import React from 'react';
 import StreamCard from '../components/StreamCard';
-// import {MOCK_STREAMS} from '../data/mockData';
+import { MOCK_STREAMS } from '@/components/data/MockData';
 
-const MOCK_STREAMS = [
-  { id: '1', title: 'Fall Detection', viewers: 1234 },
-  { id: '2', title: 'Vehicle Accident Detection', viewers: 856 },
-  { id: '3', title: 'Car Parking Detection', viewers: 2341 },
-  { id: '4', title: 'PPE Kit Detection', viewers: 567 },
-  { id: '5', title: 'Weopen Detection', viewers: 789 },
-  { id: '6', title: 'Face Mask Detection', viewers: 432 },
-];
+
 
 const StreamsGrid = () => {
   return (
@@ -22,7 +15,7 @@ const StreamsGrid = () => {
               key={stream.id}
               id={stream.id}
               title={stream.title}
-              viewers={stream.viewers}
+              
             />
           ))}
         </div>
