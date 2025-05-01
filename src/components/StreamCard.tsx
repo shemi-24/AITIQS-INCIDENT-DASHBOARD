@@ -4,10 +4,9 @@ import { useNavigate } from 'react-router-dom';
 interface StreamCardProps {
   id: string;
   title: string;
-  viewers: number;
 }
 
-const StreamCard = ({ id, title, viewers }: StreamCardProps) => {
+const StreamCard = ({ id, title }: StreamCardProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -24,7 +23,6 @@ const StreamCard = ({ id, title, viewers }: StreamCardProps) => {
       </div>
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
         <h3 className="text-white font-semibold truncate">{title}</h3>
-        <p className="text-purple-200 text-sm">{viewers.toLocaleString()} viewers</p>
       </div>
       <div className="absolute inset-0 bg-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
     </div>

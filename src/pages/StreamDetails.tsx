@@ -5,44 +5,41 @@ import { MOCK_STREAMS } from "@/components/data/MockData";
 import axios from "axios";
 
 type Stream = {
+  id: string;
   title: string;
-  viewers: number;
-  description: string;
-};
+  description?: string;
+  streamUrl: string;
+  startUrl: string;
+  stopUrl: string;
+} | null;
 
 const StreamDetails = () => {
   const { id } = useParams();
-  const [stream, setStream] = React.useState<Stream>({
-    title: "",
-    description: "",
-    viewers: 0,
-  });
+  // const [stream, setStream] = React.useState<Stream>(null);
+  const stream = MOCK_STREAMS.find((stm) => stm.id === id);
 
   const [play, setPlay] = React.useState(true);
 
-  const handleFetchStream = async () => {
-    try {
-      const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/posts/1"
-      );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // React.useEffect(() => {
+  //   if (id) {
+  //     const stm = MOCK_STREAMS.find((stm) => stm.id === id);
+  //     setStream(stm);
+  //   }
+  // }, [id]);
 
-  React.useEffect(() => {
-    if (id) {
-      const stm = MOCK_STREAMS.find((stm) => stm.id === id);
-      setStream(stm);
-    }
-  }, [id]);
+  // React.useEffect(() => {
+  //   // handleFetchStream();
+  //   axios.get("http://192.168.5.16:8000/violence/api/stop");
+  // }, []);
 
-  React.useEffect(() => {
-    // handleFetchStream();
-    axios.get("http://192.168.5.16:8000/violence/api/stop");
-  }, []);
+  // React.useEffect(()=>{
+  //   if (stream?.stopUrl){
+  //     axios.get(stream.stopUrl).catch((err)=> console.error("error stopping stream",err));
 
+  //   }
+  // },[stream]);
+
+  if (!stream) return <div className="text-white">stream not found</div>;
 
   return (
     <div className="min-h-screen bg-[#1A1F2C] p-6">
@@ -56,43 +53,22 @@ const StreamDetails = () => {
         </Link>
 
         <div className="rounded-lg overflow-hidden bg-[#2A2F3C]">
-          {/* <div className="aspect-video bg-black flex items-center justify-center">
-            <Video className="w-24 h-24 text-purple-400"  />
-          </div>
-
-          <div className="p-6">
-            <h1 className="text-2xl font-bold text-white mb-2">
-              {stream.title}
-            </h1>
-            <p className="text-purple-200 mb-4">
-              {stream.viewers.toLocaleString()} viewers
-            </p>
-            <p className="text-gray-300">{stream.description}</p>
-          </div> */}
-          
-          {/* <video>
-            <source
-              src="http://192.168.5.16:8000/violence/api/detect"
-              type="multipart/x-mixed-replace"
-            />
-          </video> */}
-           <img
-            src="http://192.168.5.16:8000/violence/api/detect"
-            alt=""
+          <img
+            src={stream.streamUrl}
+            alt={stream.title}
             className=" h-96 aspect-video"
           />
           <button
-          className="bg-blue-500 text-white p-5"
+            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded"
             onClick={() => {
-              if (play) {
-                axios.get("http://192.168.5.16:8000/violence/api/stop");
-              } else {
-                axios.get("http://192.168.5.16:8000/violence/api/detect");
-              }
-              setPlay(prevState=>!prevState)
+              const url = play ? stream.stopUrl : stream.startUrl;
+              axios
+                .get(url)
+                .catch((err) => console.error("Error toggling stream:", err));
+              setPlay((prev) => !prev);
             }}
           >
-            {!play ? "Start" : "Stop"}
+            {play ? "Stop" : "Start"} Stream
           </button>
         </div>
       </div>
