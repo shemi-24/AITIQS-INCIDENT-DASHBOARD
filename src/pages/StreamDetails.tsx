@@ -53,11 +53,21 @@ const StreamDetails = () => {
         </Link>
 
         <div className="rounded-lg overflow-hidden bg-[#2A2F3C]">
-          <img
+        <div className="relative w-full pb-[56.25%]"> {/* 16:9 Aspect Ratio */}
+          {/* <img
             src={stream.streamUrl}
             alt={stream.title}
-            className=" h-96 aspect-video"
-          />
+            className="absolute top-0 left-0 w-full h-full object-contain bg-black"
+          /> */}
+          {play && (
+            <img
+              key={Date.now()} // forces re-render as alternative
+              src={`${stream.streamUrl}?t=${Date.now()}`}
+              alt={stream.title}
+              className="absolute top-0 left-0 w-full h-full object-contain bg-black"
+            />
+          )}
+        </div>
           <button
             className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded"
             onClick={() => {
@@ -67,6 +77,16 @@ const StreamDetails = () => {
                 .catch((err) => console.error("Error toggling stream:", err));
               setPlay((prev) => !prev);
             }}
+            // onClick={() => {
+            //   const url = play ? stream.stopUrl : stream.startUrl;
+            //   axios.get(url)
+            //     .then(() => {
+            //       setTimeout(() => {
+            //         setPlay((prev) => !prev);
+            //       }, 500); // Wait for backend to close/reopen stream
+            //     })
+            //     .catch((err) => console.error("Error toggling stream:", err));
+            // }}
           >
             {play ? "Stop" : "Start"} Stream
           </button>

@@ -15,7 +15,6 @@ const StreamsGrid = () => {
               key={stream.id}
               id={stream.id}
               title={stream.title}
-              
             />
           ))}
         </div>
