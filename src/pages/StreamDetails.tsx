@@ -49,7 +49,7 @@ const StreamDetails = () => {
           className="inline-flex items-center text-purple-400 hover:text-purple-300 mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to streams
+          Come Back to streams
         </Link>
 
         <div className="rounded-lg overflow-hidden bg-[#2A2F3C]">
